@@ -1,3 +1,9 @@
+PATH
+  remote: ../admin_ecosystem
+  specs:
+    admin_ecosystem (0.1.0)
+      rails (>= 7.0.3.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -214,6 +220,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  admin_ecosystem!
   bootsnap
   capybara
   debug
