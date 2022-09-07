@@ -10,15 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_06_151316) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_07_042260) do
   create_table "admin_ecosystem_assignments", force: :cascade do |t|
-    t.integer "admin_ecosystem_user_id", null: false
-    t.integer "admin_ecosystem_role_id", null: false
+    t.integer "user_id", null: false
+    t.integer "role_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["admin_ecosystem_role_id"], name: "index_admin_ecosystem_assignments_on_admin_ecosystem_role_id"
-    t.index ["admin_ecosystem_user_id", "admin_ecosystem_role_id"], name: "admin_ecosystem_assignment_index1", unique: true
-    t.index ["admin_ecosystem_user_id"], name: "index_admin_ecosystem_assignments_on_admin_ecosystem_user_id"
+    t.index ["role_id"], name: "index_admin_ecosystem_assignments_on_role_id"
+    t.index ["user_id", "role_id"], name: "admin_ecosystem_assignment_index1", unique: true
+    t.index ["user_id"], name: "index_admin_ecosystem_assignments_on_user_id"
   end
 
   create_table "admin_ecosystem_roles", force: :cascade do |t|
@@ -64,6 +64,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_06_151316) do
     t.index ["username"], name: "index_admin_ecosystem_users_on_username", unique: true
   end
 
-  add_foreign_key "admin_ecosystem_assignments", "admin_ecosystem_roles"
-  add_foreign_key "admin_ecosystem_assignments", "admin_ecosystem_users"
+  add_foreign_key "admin_ecosystem_assignments", "admin_ecosystem_roles", column: "role_id"
+  add_foreign_key "admin_ecosystem_assignments", "admin_ecosystem_users", column: "user_id"
 end
