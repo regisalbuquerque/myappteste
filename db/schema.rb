@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_07_042260) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_08_190917) do
   create_table "admin_ecosystem_assignments", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "role_id", null: false
@@ -62,6 +62,22 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_07_042260) do
     t.index ["email"], name: "index_admin_ecosystem_users_on_email", unique: true
     t.index ["matricula"], name: "index_admin_ecosystem_users_on_matricula", unique: true
     t.index ["username"], name: "index_admin_ecosystem_users_on_username", unique: true
+  end
+
+  create_table "exemplo1s", force: :cascade do |t|
+    t.string "nome"
+    t.integer "idade"
+    t.string "cpf"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "exemplo2s", force: :cascade do |t|
+    t.string "nome"
+    t.integer "numero"
+    t.string "codigo"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_foreign_key "admin_ecosystem_assignments", "admin_ecosystem_roles", column: "role_id"
