@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_08_190917) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_10_030051) do
   create_table "admin_ecosystem_assignments", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "role_id", null: false
@@ -21,12 +21,41 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_08_190917) do
     t.index ["user_id"], name: "index_admin_ecosystem_assignments_on_user_id"
   end
 
+  create_table "admin_ecosystem_localidades", force: :cascade do |t|
+    t.string "nome"
+    t.integer "uf_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["uf_id", "nome"], name: "index_admin_ecosystem_localidades_on_uf_id_and_nome", unique: true
+    t.index ["uf_id"], name: "index_admin_ecosystem_localidades_on_uf_id"
+  end
+
+  create_table "admin_ecosystem_paises", force: :cascade do |t|
+    t.string "nome"
+    t.string "sigla"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["nome"], name: "index_admin_ecosystem_paises_on_nome", unique: true
+    t.index ["sigla"], name: "index_admin_ecosystem_paises_on_sigla", unique: true
+  end
+
   create_table "admin_ecosystem_roles", force: :cascade do |t|
     t.string "nome"
     t.string "codigo"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["codigo"], name: "index_admin_ecosystem_roles_on_codigo", unique: true
+  end
+
+  create_table "admin_ecosystem_ufs", force: :cascade do |t|
+    t.string "nome"
+    t.string "sigla"
+    t.integer "pais_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["pais_id", "nome"], name: "index_admin_ecosystem_ufs_on_pais_id_and_nome", unique: true
+    t.index ["pais_id", "sigla"], name: "index_admin_ecosystem_ufs_on_pais_id_and_sigla", unique: true
+    t.index ["pais_id"], name: "index_admin_ecosystem_ufs_on_pais_id"
   end
 
   create_table "admin_ecosystem_users", force: :cascade do |t|
@@ -82,4 +111,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_08_190917) do
 
   add_foreign_key "admin_ecosystem_assignments", "admin_ecosystem_roles", column: "role_id"
   add_foreign_key "admin_ecosystem_assignments", "admin_ecosystem_users", column: "user_id"
+  add_foreign_key "admin_ecosystem_localidades", "admin_ecosystem_ufs", column: "uf_id"
+  add_foreign_key "admin_ecosystem_ufs", "admin_ecosystem_paises", column: "pais_id"
 end
