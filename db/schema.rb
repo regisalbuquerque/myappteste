@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_10_030051) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_10_144938) do
   create_table "admin_ecosystem_assignments", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "role_id", null: false
@@ -21,6 +21,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_10_030051) do
     t.index ["user_id"], name: "index_admin_ecosystem_assignments_on_user_id"
   end
 
+  create_table "admin_ecosystem_estados_civis", force: :cascade do |t|
+    t.string "nome", null: false
+    t.string "codigo", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["codigo"], name: "index_admin_ecosystem_estados_civis_on_codigo", unique: true
+    t.index ["nome"], name: "index_admin_ecosystem_estados_civis_on_nome", unique: true
+  end
+
   create_table "admin_ecosystem_localidades", force: :cascade do |t|
     t.string "nome"
     t.integer "uf_id", null: false
@@ -28,6 +37,33 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_10_030051) do
     t.datetime "updated_at", null: false
     t.index ["uf_id", "nome"], name: "index_admin_ecosystem_localidades_on_uf_id_and_nome", unique: true
     t.index ["uf_id"], name: "index_admin_ecosystem_localidades_on_uf_id"
+  end
+
+  create_table "admin_ecosystem_nacionalidades", force: :cascade do |t|
+    t.string "nome", null: false
+    t.string "codigo", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["codigo"], name: "index_admin_ecosystem_nacionalidades_on_codigo", unique: true
+    t.index ["nome"], name: "index_admin_ecosystem_nacionalidades_on_nome", unique: true
+  end
+
+  create_table "admin_ecosystem_pagamento_bandeiras", force: :cascade do |t|
+    t.string "nome", null: false
+    t.string "codigo", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["codigo"], name: "index_admin_ecosystem_pagamento_bandeiras_on_codigo", unique: true
+    t.index ["nome"], name: "index_admin_ecosystem_pagamento_bandeiras_on_nome", unique: true
+  end
+
+  create_table "admin_ecosystem_pagamento_formas", force: :cascade do |t|
+    t.string "nome", null: false
+    t.string "codigo", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["codigo"], name: "index_admin_ecosystem_pagamento_formas_on_codigo", unique: true
+    t.index ["nome"], name: "index_admin_ecosystem_pagamento_formas_on_nome", unique: true
   end
 
   create_table "admin_ecosystem_paises", force: :cascade do |t|
@@ -45,6 +81,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_10_030051) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["codigo"], name: "index_admin_ecosystem_roles_on_codigo", unique: true
+  end
+
+  create_table "admin_ecosystem_sexos", force: :cascade do |t|
+    t.string "nome", null: false
+    t.string "codigo", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["codigo"], name: "index_admin_ecosystem_sexos_on_codigo", unique: true
+    t.index ["nome"], name: "index_admin_ecosystem_sexos_on_nome", unique: true
   end
 
   create_table "admin_ecosystem_ufs", force: :cascade do |t|
