@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_10_144938) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_14_105044) do
   create_table "admin_ecosystem_assignments", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "role_id", null: false
@@ -21,6 +21,39 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_10_144938) do
     t.index ["user_id"], name: "index_admin_ecosystem_assignments_on_user_id"
   end
 
+  create_table "admin_ecosystem_clientes", force: :cascade do |t|
+    t.string "nome", null: false
+    t.date "data_nascimento"
+    t.integer "nacionalidade_id"
+    t.integer "sexo_id"
+    t.integer "estado_civil_id"
+    t.string "profissao"
+    t.string "rg"
+    t.string "cpf"
+    t.string "mae_nome"
+    t.string "pai_nome"
+    t.string "contato_telefone"
+    t.string "contato_celular"
+    t.string "contato_email"
+    t.string "end_cep"
+    t.string "end_logradouro"
+    t.string "end_bairro"
+    t.string "end_numero"
+    t.integer "end_uf_id"
+    t.integer "end_localidade_id"
+    t.string "end_complemento"
+    t.string "status"
+    t.string "status_financeiro"
+    t.text "obs"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["end_localidade_id"], name: "index_admin_ecosystem_clientes_on_end_localidade_id"
+    t.index ["end_uf_id"], name: "index_admin_ecosystem_clientes_on_end_uf_id"
+    t.index ["estado_civil_id"], name: "index_admin_ecosystem_clientes_on_estado_civil_id"
+    t.index ["nacionalidade_id"], name: "index_admin_ecosystem_clientes_on_nacionalidade_id"
+    t.index ["sexo_id"], name: "index_admin_ecosystem_clientes_on_sexo_id"
+  end
+
   create_table "admin_ecosystem_estados_civis", force: :cascade do |t|
     t.string "nome", null: false
     t.string "codigo", null: false
@@ -28,6 +61,48 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_10_144938) do
     t.datetime "updated_at", null: false
     t.index ["codigo"], name: "index_admin_ecosystem_estados_civis_on_codigo", unique: true
     t.index ["nome"], name: "index_admin_ecosystem_estados_civis_on_nome", unique: true
+  end
+
+  create_table "admin_ecosystem_historicos", force: :cascade do |t|
+    t.date "data", null: false
+    t.text "historico", null: false
+    t.string "historical_type"
+    t.integer "historical_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["historical_type", "historical_id"], name: "index_admin_ecosystem_historicos_on_historical"
+  end
+
+  create_table "admin_ecosystem_lancamentos_receber", force: :cascade do |t|
+    t.integer "cliente_id"
+    t.integer "pagamento_forma_id"
+    t.integer "pagamento_bandeira_id"
+    t.string "descricao"
+    t.decimal "valor"
+    t.decimal "desconto_porcentagem"
+    t.decimal "desconto_valor"
+    t.decimal "juros"
+    t.decimal "multa"
+    t.decimal "taxa"
+    t.decimal "acrescimos"
+    t.decimal "valor_total"
+    t.boolean "parcelado"
+    t.boolean "parcelado_mensal"
+    t.integer "parcelas_qtde"
+    t.integer "parcelas_dia_fixo"
+    t.integer "parcelas_intervalo_dias"
+    t.decimal "valor_entrada"
+    t.decimal "valor_parcela"
+    t.date "data_lancamento"
+    t.date "data_vencimento_entrada"
+    t.date "data_vencimento_primeira"
+    t.string "status"
+    t.text "obs"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cliente_id"], name: "index_admin_ecosystem_lancamentos_receber_on_cliente_id"
+    t.index ["pagamento_bandeira_id"], name: "admin_lancamentos_receber_fk_bandeira"
+    t.index ["pagamento_forma_id"], name: "index_admin_ecosystem_lancamentos_receber_on_pagamento_forma_id"
   end
 
   create_table "admin_ecosystem_localidades", force: :cascade do |t|
@@ -73,6 +148,33 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_10_144938) do
     t.datetime "updated_at", null: false
     t.index ["nome"], name: "index_admin_ecosystem_paises_on_nome", unique: true
     t.index ["sigla"], name: "index_admin_ecosystem_paises_on_sigla", unique: true
+  end
+
+  create_table "admin_ecosystem_parcelas_receber", force: :cascade do |t|
+    t.integer "lancamento_receber_id", null: false
+    t.integer "pagamento_forma_id"
+    t.integer "pagamento_bandeira_id"
+    t.boolean "entrada"
+    t.integer "numero_parcela"
+    t.date "data_emissao"
+    t.date "data_vencimento"
+    t.date "data_recebimento"
+    t.date "data_desconto_ate"
+    t.decimal "taxa_juros"
+    t.decimal "taxa_multa"
+    t.decimal "taxa_desconto"
+    t.decimal "valor_juros"
+    t.decimal "valor_multa"
+    t.decimal "valor_desconto"
+    t.decimal "valor_acrescimentos"
+    t.decimal "valor_recebido"
+    t.string "status"
+    t.string "obs"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["lancamento_receber_id"], name: "index_admin_ecosystem_parcelas_receber_on_lancamento_receber_id"
+    t.index ["pagamento_bandeira_id"], name: "index_admin_ecosystem_parcelas_receber_on_pagamento_bandeira_id"
+    t.index ["pagamento_forma_id"], name: "index_admin_ecosystem_parcelas_receber_on_pagamento_forma_id"
   end
 
   create_table "admin_ecosystem_roles", force: :cascade do |t|
@@ -156,6 +258,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_10_144938) do
 
   add_foreign_key "admin_ecosystem_assignments", "admin_ecosystem_roles", column: "role_id"
   add_foreign_key "admin_ecosystem_assignments", "admin_ecosystem_users", column: "user_id"
+  add_foreign_key "admin_ecosystem_clientes", "admin_ecosystem_estados_civis", column: "estado_civil_id"
+  add_foreign_key "admin_ecosystem_clientes", "admin_ecosystem_localidades", column: "end_localidade_id"
+  add_foreign_key "admin_ecosystem_clientes", "admin_ecosystem_nacionalidades", column: "nacionalidade_id"
+  add_foreign_key "admin_ecosystem_clientes", "admin_ecosystem_sexos", column: "sexo_id"
+  add_foreign_key "admin_ecosystem_clientes", "admin_ecosystem_ufs", column: "end_uf_id"
+  add_foreign_key "admin_ecosystem_lancamentos_receber", "admin_ecosystem_clientes", column: "cliente_id"
+  add_foreign_key "admin_ecosystem_lancamentos_receber", "admin_ecosystem_pagamento_bandeiras", column: "pagamento_bandeira_id"
+  add_foreign_key "admin_ecosystem_lancamentos_receber", "admin_ecosystem_pagamento_formas", column: "pagamento_forma_id"
   add_foreign_key "admin_ecosystem_localidades", "admin_ecosystem_ufs", column: "uf_id"
+  add_foreign_key "admin_ecosystem_parcelas_receber", "admin_ecosystem_clientes", column: "lancamento_receber_id"
+  add_foreign_key "admin_ecosystem_parcelas_receber", "admin_ecosystem_pagamento_bandeiras", column: "pagamento_bandeira_id"
+  add_foreign_key "admin_ecosystem_parcelas_receber", "admin_ecosystem_pagamento_formas", column: "pagamento_forma_id"
   add_foreign_key "admin_ecosystem_ufs", "admin_ecosystem_paises", column: "pais_id"
 end
